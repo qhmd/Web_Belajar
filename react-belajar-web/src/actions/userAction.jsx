@@ -1,19 +1,29 @@
 import axios from "axios";
+import toast from 'react-hot-toast';
+import Cookies from 'js-cookie'; // Import js-cookie jika Anda menggunakannya untuk CSRF token
 
-export const sumbitData = async (formData, setLoading) => {
+export const submitForm = async (formData, setLoading) => {
     try {
-        const response = await axios.post('api/signup', formData);
-        const data = response.data;
+        const csrfToken = Cookies.get('XSRF-TOKEN');
 
-        if (data.success) {
-            alert("Berhasil Membuat Akun");
-
-        } else {
-            alert(data.message || "Registration failed");
+        if (csrfToken) {
+            axios.defaults.headers.common['X-XSRF-TOKEN'] = csrfToken;
         }
-    } catch (err) {
-        alert("Error: " + err.message)
+
+        const response = await axios.post("http://localhost:8000/register", formData, { withCredentials: true });
+
+        toast.success(response.data.message);
+    } catch (error) {
+        if (error.response) {
+            // Cek apakah ada errors di data
+            const errorMessage = error.response.data.errors 
+                ? Object.values(error.response.data.errors).flat().join(", ")
+                : error.response.data.message || "Terjadi Kesalahan Saat Mendaftar";
+            toast.error(errorMessage);
+        } else {
+            toast.error("Terjadi Kesalahan Jaringan");
+        }
     } finally {
-        setLoading(false)
+        setLoading(false);
     }
 }

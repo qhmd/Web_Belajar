@@ -4,11 +4,15 @@ import {Link} from "react-router-dom"
 import axios from 'axios';
 import { CheckBox } from '@mui/icons-material';
 
+import { submitForm } from '../actions/userAction';
+
 import toast, { Toaster } from 'react-hot-toast';
 
 import { EyeIcon, EyeOffIcon } from '@heroicons/react/outline';
 
 import Loader from './Layouts/loader/loaderWeb';
+
+import Cookies from 'js-cookie';
 
 
 const Signup = () => {
@@ -41,7 +45,10 @@ const Signup = () => {
     
     const handleShowPasswordClick = () => {
         setShowPassword(!showPassword);
-    };
+    };   
+
+    // Set base URL jika diperlukan
+
 
     const handleSingupSubmit = async (e) => {
         setLoading(true);
@@ -59,7 +66,7 @@ const Signup = () => {
         formData.set("email", email);
         formData.set("password", password);
 
-        await submitForm(formData);
+        await submitForm(formData,setLoading);
     }
 
     <span className="loading loading-spinner loading-lg text-warning"></span>
