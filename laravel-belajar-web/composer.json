@@ -8,8 +8,7 @@
         "php": "^8.2",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
-        "fruitcake/laravel-cors": "^3.0"
-        
+        "snowfire/beautymail": "dev-master"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

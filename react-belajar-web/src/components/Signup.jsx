@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Link} from "react-router-dom"
+import React, {useEffect, useState} from 'react';
+import {Link, redirect} from "react-router-dom"
 
 import axios from 'axios';
 import { CheckBox } from '@mui/icons-material';
@@ -10,19 +10,24 @@ import toast, { Toaster } from 'react-hot-toast';
 
 import { EyeIcon, EyeOffIcon } from '@heroicons/react/outline';
 
-import Loader from './Layouts/loader/loaderWeb';
+import LoadingButton from './Layouts/loader/loader';
+
+import './Layouts/style/form.css'
 
 import Cookies from 'js-cookie';
 
+import { useNavigate } from 'react-router-dom';
+
 
 const Signup = () => {
+    const navigate = useNavigate()
     // untuk nama
     const [isValidNama, setIsValidNama] = useState(true)
     const [name, setName] = useState('');
     const handleNameChange = (event) => {
         const newName = event.target.value;
         setName(newName);
-        setIsValidNama(newName.length >= 4);
+        setIsValidNama(newName.length >= 4 && /^[a-zA-Z]+$/.test(newName));
     }
 
     // Untuk Email
@@ -36,10 +41,29 @@ const Signup = () => {
         );
     }
 
+    
     const [showPassword, setShowPassword] = useState(false);
-
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [isValidPassword,setValidPassoword] = useState(true);
+    
+    const handlePasswordChange = (e) => {
+        const newPass = e.target.value;
+        setPassword(newPass);
+        setValidPassoword(
+        newPass !== "" && /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(newPass)
+        )
+    } 
+
+    let isSignInDisabled = !(
+        email &&
+        password &&
+        isValidEmail &&
+        confirmPassword &&
+        name &&
+        isValidNama
+      );
+
 
     const [loading, setLoading] = useState(false);
     
@@ -47,7 +71,6 @@ const Signup = () => {
         setShowPassword(!showPassword);
     };   
 
-    // Set base URL jika diperlukan
 
 
     const handleSingupSubmit = async (e) => {
@@ -55,8 +78,7 @@ const Signup = () => {
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            const notify = () => toast.error("Password tidak sama")
-            notify();
+            toast.error("Password tidak sama")
             setLoading(false);
             return;
         }
@@ -65,18 +87,15 @@ const Signup = () => {
         formData.set("name", name);
         formData.set("email", email);
         formData.set("password", password);
+        await submitForm(formData,setLoading);  
 
-        await submitForm(formData,setLoading);
+        navigate('/login');
+
     }
 
-    <span className="loading loading-spinner loading-lg text-warning"></span>
     return (
         <div className="flex items-center justify-center min-h-screen">
             <Toaster/>
-            {
-                loading ? (
-                    <Loader />
-                ) : (
                     <form 
                         onSubmit={handleSingupSubmit} 
                         className="p-6 bg-gray-100 border-2 border-black-800 rounded-lg w-[25rem]"
@@ -90,12 +109,12 @@ const Signup = () => {
                                 type="text"
                                 value={name}
                                 onChange={handleNameChange}
-                                className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:text-sm/6"
+                                className="customInput"
                                 required
                             />
                             {!isValidNama && name !== "" ? (
                                             <span style={{ color: 'red', fontSize:'0.9em', position : 'absolute', left : '0'}}>
-                                                Nama harus minimal 4 karaketer.
+                                                Minimal 4 Huruf
                                             </span>
                             ) : ""}
                         </div>
@@ -107,7 +126,7 @@ const Signup = () => {
                                         type="email"
                                         value={email}
                                         onChange={handleEmailChange}
-                                        className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:text-sm/6"
+                                        className="customInput"
                                         required
                                     />
                                     {!isValidEmail && email !== "" ? (
@@ -122,10 +141,16 @@ const Signup = () => {
                             <input
                                 type= {showPassword ? "text" : "password"}
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:text-sm/6"
+                                onChange={handlePasswordChange}
+                                className="customInput"
                                 required
                             />
+                                {!isValidPassword && password !== "" ? (
+                                    <span style={{ color: 'red', fontSize:'0.9em', position : 'absolute', left : '0'}}>
+                                        Minimal 8 Karakter Berupa Huruf, Angka, Dan Simbol.
+                                    </span>
+                                ) : (
+                                    "" )}
                             <button 
                             type="button"
                             onClick={handleShowPasswordClick}
@@ -140,13 +165,13 @@ const Signup = () => {
                             </button>
                         </div>
 
-                        <div className="relative block mb-1">
+                        <div className="relative block mb-8">
                             <label>Confirm Password</label>
                             <input
                                 type={showPassword ? 'text' : 'password'}
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
-                                className="w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:text-sm/6"
+                                className="customInput"
                                 required
                             />
                             <button 
@@ -162,9 +187,9 @@ const Signup = () => {
                                 }
                             </button>
                         </div>
-                        <button type="submit" className="w-full py-2 mt-4 bg-yellow-500 text-white rounded">
-                        Buat Akun
-                        </button>
+                        <LoadingButton isLoading={loading} disabled={isSignInDisabled}>
+                            Buat Akun
+                        </LoadingButton>
                         <div className='w-full mt-3'>
                             Sudah punya akun ? 
                             <Link to='/login' className='ml-1 text-blue-600'>
@@ -172,8 +197,6 @@ const Signup = () => {
                             </Link>
                         </div>
                     </form>
-                )
-            }
         </div>
     );
 };

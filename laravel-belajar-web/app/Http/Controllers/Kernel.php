@@ -8,6 +8,8 @@ protected $middlewareGroups = [
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
         \App\Http\Middleware\VerifyCsrfToken::class, // Middleware CSRF
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        \App\Http\Middleware\Cors::class
+        \Laravel\Cors\HandleCors::class,
     ],
 
     // Middleware grup lainnya...
