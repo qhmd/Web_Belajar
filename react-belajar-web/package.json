@@ -13,6 +13,7 @@
     "@chakra-ui/react": "^3.0.2",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^1.0.6",
     "@inertiajs/inertia-vue3": "^0.6.0",
     "@mui/icons-material": "^6.1.6",
