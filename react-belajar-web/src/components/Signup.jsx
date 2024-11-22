@@ -94,7 +94,7 @@ const Signup = () => {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen">
+        <div className="flex mt-20 items-center justify-center min-h-screen">
             <Toaster/>
                     <form 
                         onSubmit={handleSingupSubmit} 

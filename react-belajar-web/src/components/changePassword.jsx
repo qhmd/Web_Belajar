@@ -46,7 +46,7 @@ const ChangePassword = () => {
             toast.success('Kata sandi berhasil diubah.');
             setTimeout(() => {
                 window.location.href = '/login';
-            }, 1000);
+            }, 500);
         }
         setLoading(false);
     };

@@ -50,9 +50,12 @@ const Login = () => {
     const loginData = new FormData();
     loginData.set("email", email);
     loginData.set("password", password);
-    const response = await submitLogin(loginData);
-    if(response.success) {
-      navigate('/home')
+    const response = await submitLogin(loginData, setLoading);
+    console.log(response);
+    if(response) {
+      window.location.href = '/home';
+      setTimeout(() => {
+    }, 100);
     }
     }
   return (
@@ -97,12 +100,12 @@ const Login = () => {
               onClick={handleShowPasswordClick}
               className='absolute right-3 top-[3.1rem] transform -translate-y-1/2'
               >
-                  {/* {showPassword ? (
+                  {showPassword ? (
                       <EyeOffIcon className="h-5 w-5 text-gray-600" />
                   ) : (
                       <EyeIcon className="h-5 w-5 text-gray-600" />
                   )
-              } */}
+              }
               </button>
               {!isValidPassword && password!== ""? (
                   <span className='text-red-500 text-[0.9em] absolute'>

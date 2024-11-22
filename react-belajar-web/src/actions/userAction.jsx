@@ -33,7 +33,7 @@ export const submitForm = async (formData, setLoading) => {
     }
 }
 
-export const submitLogin = async (loginData)  => {
+export const submitLogin = async (loginData, setLoading)  => {
     try {
         const csrfToken = Cookies.get('XSRF-TOKEN');
 
@@ -41,16 +41,26 @@ export const submitLogin = async (loginData)  => {
             axios.defaults.headers.common['X-XSRF-TOKEN'] = csrfToken;
         }
 
-        await toast.promise(
+        const response = await toast.promise(
             axios.post("http://localhost:8000/login", loginData, { withCredentials: true }),{
                 loading: "Sedang Login...",
                 success: "Berhasil Login!",
-                error: "Password Salah",
+                error: "Password/Email Salah",
             }
         );
-        return {success : true}
+        console.log(response.data.user)
+        if (response && response.data.user) {
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+            
+
+            // localStorage.setItem('role', response.data.user.role);
+        }
+        // const response = await axios.post("http://localhost:8000/login", loginData, { withCredentials: true })
+        return response.data.user;
     } catch (error) {
         console.log(error);
+    } finally {
+        setLoading(false)
     }
 }
 

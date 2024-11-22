@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'paths' => ['*'],
+    'paths' => ['*','sanctum/csrf-cookie'],
     'allowed_methods' => ['*'],
     'allowed_origins' => ['http://localhost:5173'], // Anda bisa menyesuaikan ini untuk keamanan
     'allowed_origins_patterns' => [],

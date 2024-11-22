@@ -6,8 +6,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "laravel/fortify": "*",
         "laravel/framework": "^11.9",
+        "laravel/jetstream": "*",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
+        "livewire/livewire": "*",
         "snowfire/beautymail": "dev-master"
     },
     "require-dev": {

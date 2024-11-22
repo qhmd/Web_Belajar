@@ -44,7 +44,7 @@ const ForgotPassword = () => {
 
         const response = await submitToken(tokenData, setLoading);
         if (response.success) {
-            navigate('/ganti-sandi');
+            navigate('/forgot-password/ganti-sandi');
         }
         console.log(response)
     };
