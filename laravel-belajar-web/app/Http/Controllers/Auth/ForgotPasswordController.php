@@ -8,7 +8,7 @@ use App\Models\User; // Pastikan Anda mengimpor model User
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
-use App\Mail\ResetPasswordMail;
+use App\Http\middleware\Mail\ResetPasswordMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +26,7 @@ class ForgotPasswordController extends Controller
     
     public function sendResetLinkEmail(Request $request)
     {
+        error_log('User email: ' . $request->email);
         // Validasi email yang diberikan
         $request->validate(['email' => 'required|email']);
 
@@ -37,7 +38,6 @@ class ForgotPasswordController extends Controller
             return response()->json(['message' => 'Email not found'], 404);
         }
 
-    
             // Generate token acak
         $token = rand(10000, 99999); // Menghasilkan angka acak antara 10000 dan 99999
 

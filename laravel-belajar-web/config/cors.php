@@ -1,26 +1,11 @@
 <?php
 
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Cross-Origin Resource Sharing (CORS) Configuration
-    |--------------------------------------------------------------------------
-    |
-    | Here you may configure your settings for cross-origin resource sharing
-    | or "CORS". This determines what cross-origin operations may execute
-    | in web browsers. You are free to adjust these settings as needed.
-    |
-    | To learn more: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
-    |
-    */
-
-    'paths' => ['*','sanctum/csrf-cookie'],
+    'paths' => [ 'api/*', 'sanctum/csrf-cookie', 'materifront/*','*'],  // Pastikan path sesuai dengan rute yang ada
     'allowed_methods' => ['*'],
-    'allowed_origins' => ['http://localhost:5173'], // Anda bisa menyesuaikan ini untuk keamanan
-    'allowed_origins_patterns' => [],
-    'allowed_headers' => ['*'],
+    'allowed_origins' => ['http://localhost:5173', '*'],  // Pastikan frontend diizinkan
+    'allowed_headers' => ['Content-Type', 'X-XSRF-TOKEN', '*'],
     'exposed_headers' => [],
     'max_age' => 0,
-    'supports_credentials' => true,
+    'supports_credentials' => true,  // Hanya jika perlu kredensial (seperti cookies)
 ];

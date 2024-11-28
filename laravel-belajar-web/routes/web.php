@@ -5,6 +5,10 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Mail\ResetPasswordMail;
 use App\Http\Controllers\Users\UserKontrol;
 use App\Http\Controllers\Materi\MateriFront;
+use App\Http\Controllers\Materi\MateriBack;
+use App\Http\Controllers\Materi\PelatihanKontrol;
+
+
 
 
 use App\Http\Controllers\AuthController;
@@ -18,7 +22,8 @@ Route::get('/login', [LoginController::class, 'showLoginForm']);
 
 Route::get('/logout', [LoginController::class, 'showLoginForm']);
 Route::get('/admin/users', [UserKontrol::class, 'index']);
-Route::match(['get','patch'],'/admin/users/update/{id}', [UserKontrol::class, 'update']);
+
+Route::match(['get','put'],'/admin/users/update/{id}', [UserKontrol::class, 'update']);
 Route::match(['get','delete'],'/admin/users/delete/{id}', [UserKontrol::class, 'delete']);
 
 
@@ -48,10 +53,20 @@ Route::match(['get','delete'],'/admin/users/delete/{id}', [UserKontrol::class, '
 // });
 
 
-Route::get('/materi', [MateriFront::class, 'index']);
-Route::post('/materi', [MateriFront::class, 'store']);
+Route::get('/materifront', [MateriFront::class, 'index']);
+Route::post('/materifront', [MateriFront::class, 'store']);
 
+Route::match(['get','put'],'/materifront/update/{id}', [MateriFront::class, 'update']);
+Route::match(['get','delete'],'/materifront/delete/{id}', [MateriFront::class, 'delete']);
 
+Route::match(['get','put'],'/materiback/update/{id}', [MateriBack::class, 'update']);
+Route::match(['get','delete'],'/materiback/delete/{id}', [MateriBack::class, 'delete']);
+
+Route::get('/materiback', [MateriBack::class, 'index']);
+Route::post('/materiback', [MateriBack::class, 'store']);
+
+Route::get('/pelatihan', [PelatihanKontrol::class, 'index']);
+Route::post('/pelatihan', [PelatihanKontrol::class, 'store']);
 
 
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm']);

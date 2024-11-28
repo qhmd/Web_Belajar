@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import toast, {Toaster} from "react-hot-toast";
+import { editData } from "../../actions/adminAction";
+import { deleteData } from "../../actions/adminAction";
 import Cookies from 'js-cookie'; // Import js-cookie jika Anda menggunakannya untuk CSRF token
 
 
@@ -21,17 +23,7 @@ const ListUser = () => {
         toast.error("Error fetching users:", error);
       });
   }, []);
-  console.log(selectedUser);
-  const handleDelete = (id) => {
-    axios
-      .delete(`http://127.0.0.1:8000/admin/delete/users/${id}`)
-      .then(() => {
-        setUsers(users.filter((user) => user.id !== id)); // hapus pengguna dari state
-      })
-      .catch((error) => {
-        toast.error("Error deleting user:", error);
-      });
-  };
+
 
   const handleOpenModal = (user) => {
     setSelectedUser(user);
@@ -43,45 +35,26 @@ const ListUser = () => {
     setSelectedUser(null);
   };
 
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await deleteData(id);
+      if (response) {
+        console.log("User berhasil dihapus.");
+      } else {
+        console.log("Gagal menghapus user.");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      // Muat CSRF token jika belum tersedia
-      // await axios.get("http://127.0.0.1:8000/sanctum/csrf-cookie", { withCredentials: true });
-  
-      // Ambil token CSRF dari cookie
-      const csrfToken = document.cookie.split(';').find(c => c.trim().startsWith('XSRF-TOKEN=')).split('=')[1];
-      // const csrfToken = Cookies.get("XSRF-TOKEN");
-      
-      if (csrfToken) {
-        axios.defaults.headers.common['X-XSRF-TOKEN'] = csrfToken;
-      }
-
-      console.log("CSRF Token:", csrfToken);
-
-      
-      // Kirim permintaan PATCH dengan token CSRF
-      await axios.patch(`http://127.0.0.1:8000/admin/users/update/${selectedUser.id}`, selectedUser, {withCredentials: true, // Pastikan cookies dikirim
-      });
-      
-      toast.success("User updated successfully!");
-    } catch (error) {
-      if (error.response) {
-        if (error.response.status === 422) {
-            toast.error("Data tidak valid!");
-        } else if (error.response.status === 403) {
-            toast.error("Akses ditolak!");
-        } else {
-            const errorMessage = error.response.data.errors
-                ? Object.values(error.response.data.errors).flat().join(", ")
-                : error.response.data.message;
-            toast.error(errorMessage);
-        }
-        } else {
-            toast.error("Terjadi Kesalahan Jaringan");
-        }
-    }
+    console.log(selectedUser);
+    const response = await editData(selectedUser)   
+    console.log(response);
   };
   return (
     <div className="relative overflow-x-auto">

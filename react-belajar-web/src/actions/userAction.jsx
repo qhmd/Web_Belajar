@@ -40,7 +40,6 @@ export const submitLogin = async (loginData, setLoading)  => {
         if (csrfToken) {
             axios.defaults.headers.common['X-XSRF-TOKEN'] = csrfToken;
         }
-
         const response = await toast.promise(
             axios.post("http://localhost:8000/login", loginData, { withCredentials: true }),{
                 loading: "Sedang Login...",
@@ -88,9 +87,7 @@ export const submitForgotPassword = async (resetData, setLoading) => {
             // toast.error(errorMessage);
             // toast.error("Terjadi Kesalahan Jaringan");
         }
-    } finally {
-        setLoading(false)
-    }
+    } 
 }
 
 export const submitToken = async (tokenData, setLoading) => {

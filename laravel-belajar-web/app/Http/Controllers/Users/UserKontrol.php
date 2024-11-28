@@ -36,11 +36,12 @@ public function delete(Request $request, $id) {
     return response()->json(['message' => 'User deleted successfully']);
 }
 
+
+
 public function update(Request $request, $id)
 {
     
     try {
-        Log::info('CSRF Token:', [request()->header('X-XSRF-TOKEN')]);
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id, 

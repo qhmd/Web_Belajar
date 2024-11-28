@@ -7,10 +7,10 @@ const Home = () => {
     const { isLoggedIn } = useLogin();
     console.log(bgImage);
     return (
-        <div className="relative isolate px-6 pt-14 lg:px-8">
+        <div className="relative isolate px-6 lg:px-8">
             <div
                 aria-hidden="true"
-                className="absolute mt-5 inset-x-0 z-[-99] overflow-hidden blur-[2px] min-h-screen"
+                className="absolute inset-x-0 z-[-99] overflow-hidden blur-[2px] min-h-screen"
                 style={{
                     backgroundImage: `url(${bgImage})`,
                     backgroundSize: 'cover',
@@ -19,7 +19,7 @@ const Home = () => {
                 }}
             ></div>
 
-            <div className="max-w-4xl py-32 sm:py-48 lg:py-56 relative"> 
+            <div className="max-w-4xl py-32 sm:py-44 relative"> 
                 <div className="relative">
                     <h1 className="text-balance text-7xl font-semibold tracking-tight text-white sm:text-7xl">
                         Belajar Web Developer Hanya Di LearningCode

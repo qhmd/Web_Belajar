@@ -9,7 +9,8 @@ import Dashboard from "../components/Admin/dashboard"; //
 import ListUser from "../components/Admin/listuser";
 import UpdateUserForm from "../components/Admin/updateUsers";
 import Frontend from "../components/Admin/frontend";
-import TambahMateriFront from "../components/Admin/tambahMateriFront";
+import MateriPageBack from "../components/Admin/backend";
+import Pelatihan from "../components/Admin/pelatihan";
 
 function Admin() {
     return (
@@ -56,6 +57,50 @@ function Admin() {
                 path="/materifront" 
                 element={
                     <ProtectedRoute allowedRoles={['admin']}>
+                        <div style={{ display: 'flex' }}>
+                            {/* Sidebar (Dashboard) */}
+                            <div style={{ width: '250px', background: '#f4f4f4' }}>
+                                <Dashboard />
+                            </div>
+
+                            {/* Konten Utama */}
+                            <div style={{ padding: '20px' }}>
+                                <>
+                                <Frontend /> {/* Komponen yang ingin dirender */}
+                                </>
+                            </div>
+                            {/* <div style={{ flex: 1, padding: '20px' }}> */}
+                                {/* <TambahMateriFront /> Komponen yang ingin dirender */}
+                            {/* </div> */}
+                        </div>
+                    </ProtectedRoute>
+                }
+            />
+            <Route 
+                path="/materiback" 
+                element={
+                    <ProtectedRoute allowedRoles={['admin']}>
+                        <div style={{ display: 'flex'}}>
+                            {/* Sidebar (Dashboard) */}
+                            <div style={{ width: '250px', background: '#f4f4f4' }}>
+                                <Dashboard />
+                            </div>
+
+                            {/* Konten Utama */}
+                            <div style={{ padding: '20px' }}>
+                                <MateriPageBack /> {/* Komponen yang ingin dirender */}
+                            </div>
+                            {/* <div style={{ flex: 1, padding: '20px' }}> */}
+                                {/* <TambahMateriFront /> Komponen yang ingin dirender */}
+                            {/* </div> */}
+                        </div>
+                    </ProtectedRoute>
+                }
+            />
+            <Route 
+                path="/pelatihan" 
+                element={
+                    <ProtectedRoute allowedRoles={['admin']}>
                         <div style={{ display: 'flex', height: '100vh' }}>
                             {/* Sidebar (Dashboard) */}
                             <div style={{ width: '250px', background: '#f4f4f4' }}>
@@ -64,11 +109,11 @@ function Admin() {
 
                             {/* Konten Utama */}
                             <div style={{ flex: 1, padding: '20px' }}>
-                                <Frontend /> {/* Komponen yang ingin dirender */}
+                                <Pelatihan /> {/* Komponen yang ingin dirender */}
                             </div>
-                            <div style={{ flex: 1, padding: '20px' }}>
-                                <TambahMateriFront /> {/* Komponen yang ingin dirender */}
-                            </div>
+                            {/* <div style={{ flex: 1, padding: '20px' }}> */}
+                                {/* <TambahMateriFront /> Komponen yang ingin dirender */}
+                            {/* </div> */}
                         </div>
                     </ProtectedRoute>
                 }

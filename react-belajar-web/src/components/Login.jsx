@@ -59,8 +59,9 @@ const Login = () => {
     }
     }
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center -mt-10 mb-28 justify-center min-h-screen">
       <Toaster/>
+      
           <form onSubmit={handleLoginSubmit}
                 className="p-6 bg-gray-100 border-2 border-black-800 rounded-lg w-[25rem]"
                 onFocus={(e) => e.target.style.outline = 'none'}      
