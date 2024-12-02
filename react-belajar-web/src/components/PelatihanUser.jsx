@@ -39,13 +39,20 @@ const PelatihanUser = () => {
                                 />
                             </a>
                             <div className="p-5">
-                                <a href="#">
+                                {/* <a href="#"> */}
                                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">
-                                        {item.judul_Pelatihan}
+                                        {item.judul_pelatihan}
                                     </h5>
-                                </a>
+                                {/* </a> */}
                                 <p className="mb-3 font-normal text-gray-100 text-base">
                                     {item.deskripsi}
+                                </p>
+                                <hr />
+                                <p className="mb-3 font-normal text-gray-100 text-base">
+                                    {'Waktu Pendaftaran : ' + item.tanggal_buka + ' Sampai ' + item.tanggal_tutup}
+                                </p>
+                                <p className="mb-3 font-normal text-gray-100 text-base">
+                                    {'Lama Pelatihan : ' + item.lama_pelatihan}
                                 </p>
                                     <a
                                         href={item.link_pelatihan}

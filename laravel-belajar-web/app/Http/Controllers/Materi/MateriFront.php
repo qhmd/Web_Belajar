@@ -15,14 +15,16 @@ class MateriFront extends Controller
         return response()->json(FrontEnd::all());
     }
 
+
     public function store(Request $request)
     {
         // Validasi input
         $request->validate([
             'judul_materi' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'link_materi' => 'required|file|mimes:pdf', 
-            'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'level_materi' => 'required|string',
+            'link_materi' => 'required|file|mimes:pdf|max:10240', 
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
 
         // Simpan file PDF
@@ -35,6 +37,7 @@ class MateriFront extends Controller
         $materi = FrontEnd::create([
             'judul_materi' => $request->judul_materi,
             'deskripsi' => $request->deskripsi,
+            'level_materi' => $request->level_materi, 
             'link_materi' => $pdfPath,
             'picture' => $imagePath,
         ]);
@@ -55,6 +58,7 @@ class MateriFront extends Controller
             $validated = $request->validate([
                 'judul_materi' => 'required|string|max:255',
                 'deskripsi' => 'required|string',
+                'level_materi' => 'required|string',
                 'link_materi' => 'nullable|file|mimes:pdf|max:5120', // Tambahkan max ukuran jika perlu
                 'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
@@ -94,6 +98,16 @@ class MateriFront extends Controller
 
     public function delete(Request $request, $id) {
         $materi = FrontEnd::findOrFail($id);
+
+        if ($materi->picture && Storage::exists($materi->picture)) {
+            Storage::delete($materi->picture);
+        }
+    
+        // Menghapus file PDF jika ada
+        if ($materi->link_materi && Storage::exists($materi->link_materi)) {
+            Storage::delete($materi->link_materi);
+        }
+        
         $materi->delete();
         return response()->json(['message' => 'Materi Berhasil Dihapus']);
     }

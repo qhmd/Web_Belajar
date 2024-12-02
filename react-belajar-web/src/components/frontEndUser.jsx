@@ -7,7 +7,9 @@ const FrontEndUser = () => {
     useEffect(() => {
         axios.get("http://127.0.0.1:8000/materifront") // URL API Laravel
             .then((response) => {
-                setMateri(response.data);
+                // Mengambil data materi dan memfilter berdasarkan level 'Pemula'
+                const materiPemula = response.data.filter(materi => materi.level_materi === 'Pemula');
+                setMateri(materiPemula); // Menyimpan hasil filter ke state
             })
             .catch((error) => {
                 console.error("Error fetching users:", error);
@@ -25,7 +27,7 @@ const FrontEndUser = () => {
             {/* Daftar Materi */}
             <div className="relative z-20 container mx-auto max-w-full px-4">
                 <div className='flex items-center justify-center h-20'>
-                    <h1 className="text-2xl font-bold text-center text-white">Daftar Materi Front-End</h1>
+                    <h1 className="text-2xl font-bold text-center text-white">Daftar Materi Front-End Pemula</h1>
                 </div>
                 <hr className="border-slate-700" />
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-5">

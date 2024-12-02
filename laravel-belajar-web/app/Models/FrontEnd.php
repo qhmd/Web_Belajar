@@ -15,7 +15,7 @@ class FrontEnd extends Authenticatable
     protected $table = 'front_end';
 
     // Kolom yang diizinkan untuk mass assignment
-    protected $fillable = ['judul_materi', 'deskripsi', 'link_materi', 'picture'];
+    protected $fillable = ['judul_materi', 'level_materi' ,'deskripsi', 'link_materi', 'picture'];
 
 }
 

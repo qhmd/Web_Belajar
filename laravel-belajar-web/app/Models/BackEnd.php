@@ -15,7 +15,7 @@ class BackEnd extends Authenticatable
     protected $table = 'back_end';
 
     // Kolom yang diizinkan untuk mass assignment
-    protected $fillable = ['judul_materi', 'deskripsi', 'link_materi', 'picture'];
+    protected $fillable = ['judul_materi', 'deskripsi', 'level_materi', 'link_materi', 'picture'];
 
 }
 

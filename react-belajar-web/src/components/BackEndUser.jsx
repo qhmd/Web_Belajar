@@ -7,7 +7,8 @@ const BackEnduser = () => {
     useEffect(() => {
         axios.get("http://127.0.0.1:8000/materiback") // URL API Laravel
             .then((response) => {
-                setMateri(response.data);
+                const materiPem = response.data.filter(response => response => level_materi === 'Pemula')
+                setMateri(materiPem);
             })
             .catch((error) => {
                 console.error("Error fetching users:", error);

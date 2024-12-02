@@ -14,6 +14,7 @@ const MateriPage = () => {
     const [selectedMateri, setSelectedMateri] = useState({
         judul_materi: '',
         deskripsi: '',
+        level_materi: '',
         link_materi: null,
         picture: null,
     });
@@ -21,6 +22,7 @@ const MateriPage = () => {
     const [formDataSend, setFormDataSend] = useState({
         judul_materi: '',
         deskripsi: '',
+        level_materi: '',
         link_materi: null,
         picture: null,
     });
@@ -47,6 +49,7 @@ const MateriPage = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        // console.log("Selected Level Materi:", value); // Debugging
         setFormDataSend({
             ...formDataSend,
             [name]: value,
@@ -77,6 +80,7 @@ const MateriPage = () => {
         const formData = new FormData();
         formData.append('judul_materi', selectedMateri.judul_materi);
         formData.append('deskripsi', selectedMateri.deskripsi);
+        formData.append('level_materi', selectedMateri.level_materi);
         formData.append('link_materi', selectedMateri.link_materi);
         formData.append('picture', selectedMateri.picture);
         console.log(selectedMateri)
@@ -90,7 +94,7 @@ const MateriPage = () => {
             }
             axios.defaults.withCredentials = true;
             await toast.promise(
-                axios.put(`http://localhost:8000/materifront/update/${selectedMateri.id}`, selectedMateri ,{
+                axios.post(`http://localhost:8000/materifront/update/${selectedMateri.id}`, selectedMateri ,{
                     withCredentials: true,
                     headers: { 'Content-Type':'multipart/form-data' },
                 }),
@@ -122,6 +126,7 @@ const MateriPage = () => {
         const data = new FormData();
         data.append('judul_materi', formDataSend.judul_materi);
         data.append('deskripsi', formDataSend.deskripsi);
+        data.append('level_materi', formDataSend.level_materi);
         data.append('link_materi', formDataSend.link_materi);
         data.append('picture', formDataSend.picture);
         console.log(data)
@@ -176,6 +181,8 @@ const MateriPage = () => {
                         />
                         <h2 className="text-xl font-semibold">{item.judul_materi}</h2>
                         <p className="text-sm text-gray-600">{item.deskripsi}</p>
+                        <br />
+                        <p className="text-sm text-gray-600">{"Level Materi : " + item.level_materi}</p>
 
                         <button
                             className="bg-yellow-500 text-white p-2 mt-2 rounded mb-5"
@@ -219,7 +226,28 @@ const MateriPage = () => {
                             </div>
                             <div>
                                 <label className="block font-semibold">Deskripsi</label>
-                                <textarea name="deskripsi" value={formDataSend.deskripsi} onChange={handleChange} className="w-full border px-3 py-2 rounded" rows="4" required></textarea>
+                                <textarea name="deskripsi" value={formDataSend.deskripsi} onChange={handleChange} className="w-full border px-3 py-2 rounded" rows="2" required></textarea>
+                            </div>
+                            <div className="col-span-2 sm:col-span-1">
+                                <label
+                                    htmlFor="level_materi"
+                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                >
+                                    Level Materi
+                                </label>
+                                <select
+                                    id="level_materi"
+                                    name="level_materi"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    value={formDataSend.level_materi}
+                                    onChange={handleChange}
+                                    required
+                                    defa
+                                >
+                                    <option value="Pemula" selected>Pemula</option>
+                                    <option value="Manengah">Manengah</option>
+                                    <option value="Ahli">Ahli</option>
+                                </select>
                             </div>
                             <div>
                                 <label className="block font-semibold">Materi</label>
@@ -256,7 +284,27 @@ const MateriPage = () => {
                             </div>
                             <div>
                                 <label className="block font-semibold">Deskripsi</label>
-                                <textarea name="deskripsi" value={selectedMateri.deskripsi} id='deskripsi' onChange={(e) => setSelectedMateri({...selectedMateri, deskripsi : e.target.value})} className="w-full border px-3 py-2 rounded" rows="4" required></textarea>
+                                <textarea name="deskripsi" value={selectedMateri.deskripsi} id='deskripsi' onChange={(e) => setSelectedMateri({...selectedMateri, deskripsi : e.target.value})} className="w-full border px-3 py-2 rounded" rows="2" required></textarea>
+                            </div>
+                            <div className="col-span-2 sm:col-span-1">
+                                <label
+                                    htmlFor="level_materi"
+                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                >
+                                    Level Materi
+                                </label>
+                                <select
+                                    id="level_materi"
+                                    name="level_materi"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    value={selectedMateri.level_materi}
+                                    onChange={(e) => setSelectedMateri({...selectedMateri, level_materi : e.target.value})}
+                                    required
+                                >
+                                    <option value="Pemula">Pemula</option>
+                                    <option value="Manengah">Manengah</option>
+                                    <option value="Ahli">Ahli</option>
+                                </select>
                             </div>
                             <div>
                                 <label className="block font-semibold">Materi</label>

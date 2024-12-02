@@ -54,7 +54,10 @@ const ListUser = () => {
     e.preventDefault();
     console.log(selectedUser);
     const response = await editData(selectedUser)   
-    console.log(response);
+    if (response.success) {
+      toast.success("User berhasil diedit.");
+      handleCloseModal();
+    }    
   };
   return (
     <div className="relative overflow-x-auto">

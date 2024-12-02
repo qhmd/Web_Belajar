@@ -14,6 +14,13 @@ import Users from "./routes/Users";
 import FrontEndUser from "./components/frontendUser";
 import BackEndUser from "./components/BackEndUser";
 import PelatihanUser from "./components/PelatihanUser";
+import LevelMateriFront from "./components/levelFront/levelMateriFront";
+import FrontEndUserMenengah from "./components/frontEndManengah";
+import FrontEndUserLanjutan from "./components/frontEndLanjutan";
+import LevelMateriBack from "./components/levelFront/levelMateriBack";
+import BackEnduser from "./components/BackEndUser";
+import BackEnduserMenengah from "./components/levelBack/backEndMenengah";
+import BackEnduserLanjutan from "./components/levelBack/backEndLanjutan";
 
 function App() {
   return (
@@ -24,10 +31,20 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/front-end" element={
               <>
-                <FrontEndUser />
+                <LevelMateriFront />
               </>
               } />
-          <Route path="/back-end" element={<BackEndUser />} />
+          <Route path='front-end/pemula' element={<FrontEndUser/>}/>
+          <Route path='front-end/menengah' element={<FrontEndUserMenengah/>}/>
+          <Route path='front-end/lanjutan' element={<FrontEndUserLanjutan/>}/>
+
+
+          {/* <Route path="/back-end" element={<BackEndUser />} /> */}
+          <Route path="/back-end" element={<LevelMateriBack />} />
+          <Route path='back-end/pemula' element={<BackEndUser/>}/>
+          <Route path='back-end/menengah' element={<BackEnduserMenengah/>}/>
+          <Route path='back-end/lanjutan' element={<BackEnduserLanjutan/>}/>
+          
           <Route path="/pelatihan" element={<PelatihanUser />} />
           <Route path="/login"
             element={

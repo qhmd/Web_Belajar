@@ -7,12 +7,7 @@ use App\Http\Controllers\Users\UserKontrol;
 use App\Http\Controllers\Materi\MateriFront;
 use App\Http\Controllers\Materi\MateriBack;
 use App\Http\Controllers\Materi\PelatihanKontrol;
-
-
-
-
 use App\Http\Controllers\AuthController;
-
 
 Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/register', [RegisterController::class, 'showRegistrationForm']);
@@ -24,6 +19,7 @@ Route::get('/logout', [LoginController::class, 'showLoginForm']);
 Route::get('/admin/users', [UserKontrol::class, 'index']);
 
 Route::match(['get','put'],'/admin/users/update/{id}', [UserKontrol::class, 'update']);
+Route::match(['get','post'],'/users/update/{id}', [UserKontrol::class, 'updateUser']);
 Route::match(['get','delete'],'/admin/users/delete/{id}', [UserKontrol::class, 'delete']);
 
 
@@ -56,10 +52,16 @@ Route::match(['get','delete'],'/admin/users/delete/{id}', [UserKontrol::class, '
 Route::get('/materifront', [MateriFront::class, 'index']);
 Route::post('/materifront', [MateriFront::class, 'store']);
 
-Route::match(['get','put'],'/materifront/update/{id}', [MateriFront::class, 'update']);
+Route::post('/materifront/update/{id}', [MateriFront::class, 'update']);
+
+Route::post('/materiback/update/{id}', [MateriBack::class, 'update']);
+
+Route::post('/pelatihan/update/{id}', [PelatihanKontrol::class, 'update']);
+
+// Route::match(['get','put'],'/materifront/update/{id}', [MateriFront::class, 'update']);
 Route::match(['get','delete'],'/materifront/delete/{id}', [MateriFront::class, 'delete']);
 
-Route::match(['get','put'],'/materiback/update/{id}', [MateriBack::class, 'update']);
+// Route::match(['get','put'],'/materiback/update/{id}', [MateriBack::class, 'update']);
 Route::match(['get','delete'],'/materiback/delete/{id}', [MateriBack::class, 'delete']);
 
 Route::get('/materiback', [MateriBack::class, 'index']);
@@ -67,6 +69,10 @@ Route::post('/materiback', [MateriBack::class, 'store']);
 
 Route::get('/pelatihan', [PelatihanKontrol::class, 'index']);
 Route::post('/pelatihan', [PelatihanKontrol::class, 'store']);
+
+Route::match(['get','delete'],'/pelatihan/delete/{id}', [PelatihanKontrol::class, 'delete']);
+
+
 
 
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm']);

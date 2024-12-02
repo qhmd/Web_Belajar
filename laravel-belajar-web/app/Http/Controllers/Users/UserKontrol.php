@@ -66,6 +66,37 @@ public function update(Request $request, $id)
         ], 500);
     }
 }
-    
+
+public function updateUser(Request $request, $id)
+{
+    try {
+
+        Log::info('Data diterima', [
+            'all_data' => $request->all(),
+        ]);
+        
+        // Validasi input
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,  // Perbaikan pada validasi email
+            'password' => 'nullable|string|min:8',
+        ]);
+
+        // Mencari pengguna berdasarkan ID
+        $user = User::findOrFail($id);  
+
+        // Memperbarui data pengguna
+        $user->update($validated);
+
+        return response()->json($user, 200);
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        // Menangani pengecualian validasi
+        return $this->handleValidationErrors($e->validator);
+    } catch (\Exception $e) {
+        // Menangani pengecualian umum lainnya
+        return response()->json(['error' => 'Terjadi kesalahan. Silakan coba lagi nanti.'], 500);
+    }
+}
 
 }

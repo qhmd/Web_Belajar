@@ -101,7 +101,7 @@ function Admin() {
                 path="/pelatihan" 
                 element={
                     <ProtectedRoute allowedRoles={['admin']}>
-                        <div style={{ display: 'flex', height: '100vh' }}>
+                        <div style={{ display: 'flex'}}>
                             {/* Sidebar (Dashboard) */}
                             <div style={{ width: '250px', background: '#f4f4f4' }}>
                                 <Dashboard />

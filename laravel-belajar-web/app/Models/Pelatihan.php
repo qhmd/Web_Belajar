@@ -15,7 +15,7 @@ class Pelatihan extends Authenticatable
     protected $table = 'pelatihan';
 
     // Kolom yang diizinkan untuk mass assignment
-    protected $fillable = ['judul_pelatihan', 'deskripsi', 'picture', 'link_pelatihan'];
+    protected $fillable = ['judul_pelatihan', 'deskripsi', 'tanggal_buka', 'tanggal_tutup', 'lama_pelatihan' , 'picture', 'link_pelatihan'];
 
 }
 
